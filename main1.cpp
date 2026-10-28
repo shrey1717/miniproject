@@ -41,6 +41,11 @@ public:
     {
         available = value;
     }
+
+    int getID() const
+    {
+        return id;
+    }
 };
 
 class Car : public Vehicle
@@ -73,6 +78,52 @@ public:
     }
 };
 
+class Customer
+{
+private:
+    int customerID;
+    string customerName;
+
+public:
+    Customer(int id, string name)
+        : customerID(id), customerName(name)
+    {
+    }
+
+    void display() const
+    {
+        cout << "\nCustomer ID: " << customerID << endl;
+        cout << "Customer Name: " << customerName << endl;
+    }
+};
+
+class Rental
+{
+private:
+    int rentalDays;
+    double pricePerDay;
+
+public:
+    Rental(int days, double price)
+        : rentalDays(days), pricePerDay(price)
+    {
+    }
+
+    double calculateBill() const
+    {
+        return rentalDays * pricePerDay;
+    }
+
+    void displayBill() const
+    {
+        cout << "Rental Days: " << rentalDays << endl;
+        cout << "Price Per Day: Rs. " << pricePerDay << endl;
+        cout << "Total Bill: Rs. " << calculateBill() << endl;
+    }
+};
+
+
+
 int main()
 {
     Vehicle* vehicles[10];
@@ -89,34 +140,134 @@ int main()
     vehicles[8] = new Bike(202, "Royal Enfield", 1200);
     vehicles[9] = new Bike(203, "TVS Apache", 800);
 
-    cout << "===== VEHICLE RENTAL MANAGEMENT SYSTEM =====" << endl;
-    cout << "\nVehicle Details:\n" << endl;
+    int choice;
 
-    for (int i = 0; i < 10; i++)
+    do
     {
-        vehicles[i]->display();
-    }
+        cout << "\n===== VEHICLE RENTAL MANAGEMENT SYSTEM =====" << endl;
+        cout << "1. Display All Vehicles" << endl;
+        cout << "2. Rent a Vehicle" << endl;
+        cout << "3. Return a Vehicle" << endl;
+        cout << "4. Exit" << endl;
 
-    cout << "\n===== AVAILABILITY CHECK =====" << endl;
+        cout << "\nEnter your choice: ";
+        cin >> choice;
 
-    if (vehicles[0]->isAvailable())
-    {
-        cout << "Maruti Swift is available." << endl;
-    }
-    else
-    {
-        cout << "Maruti Swift is not available." << endl;
-    }
+        if (choice == 1)
+        {
+            cout << "\n===== VEHICLE DETAILS =====" << endl;
 
-    cout << "\n===== RENTING A VEHICLE =====" << endl;
+            for (int i = 0; i < 10; i++)
+            {
+                vehicles[i]->display();
+            }
+        }
 
-    vehicles[0]->setAvailable(false);
+        else if (choice == 2)
+        {
+            int id, days, vehicleID;
+            string name;
+            int index = -1;
 
-    cout << "Maruti Swift has been rented." << endl;
-    vehicles[0]->display();
+            cout << "\nEnter Customer ID: ";
+            cin >> id;
 
-    cout << "\nDaily rental price: Rs. "
-         << vehicles[0]->getPricePerDay() << endl;
+            cin.ignore();
+
+            cout << "Enter Customer Name: ";
+            getline(cin, name);
+
+            cout << "Enter Vehicle ID: ";
+            cin >> vehicleID;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (vehicles[i]->getID() == vehicleID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index == -1)
+            {
+                cout << "Invalid Vehicle ID!" << endl;
+            }
+            else if (!vehicles[index]->isAvailable())
+            {
+                cout << "Vehicle is not available!" << endl;
+            }
+            else
+            {
+                cout << "Enter Rental Days: ";
+                cin >> days;
+
+                if (days <= 0)
+                {
+                    cout << "Invalid rental days!" << endl;
+                }
+                else
+                {
+                    Customer c1(id, name);
+
+                    Rental r1(days, vehicles[index]->getPricePerDay());
+
+                    vehicles[index]->setAvailable(false);
+
+                    cout << "\n===== RENTAL RECEIPT =====" << endl;
+
+                    c1.display();
+                    vehicles[index]->display();
+                    r1.displayBill();
+
+                    cout << "\nVehicle rented successfully!" << endl;
+                }
+            }
+        }
+
+        else if (choice == 3)
+        {
+            int vehicleID;
+            int index = -1;
+
+            cout << "\nEnter Vehicle ID to Return: ";
+            cin >> vehicleID;
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (vehicles[i]->getID() == vehicleID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index == -1)
+            {
+                cout << "Invalid Vehicle ID!" << endl;
+            }
+            else if (vehicles[index]->isAvailable())
+            {
+                cout << "This vehicle is not currently rented!" << endl;
+            }
+            else
+            {
+                vehicles[index]->setAvailable(true);
+                cout << "Vehicle returned successfully!" << endl;
+            }
+        }
+
+        else if (choice == 4)
+        {
+            cout << "\nThank you for using our system!" << endl;
+        }
+
+        else
+        {
+            cout << "\nInvalid choice! Try again." << endl;
+        }
+
+    } while (choice != 4);
 
     for (int i = 0; i < 10; i++)
     {
