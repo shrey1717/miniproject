@@ -2,6 +2,9 @@
 #include <string>
 using namespace std;
 
+// ================= MEMBER 1 =================
+
+// Base Class
 class Vehicle
 {
 private:
@@ -20,6 +23,7 @@ public:
     {
         cout << id << " - " << name
              << " - Rs. " << pricePerDay << "/day";
+
         cout << (available ? " - Available" : " - Rented") << endl;
     }
 
@@ -48,6 +52,7 @@ public:
     }
 };
 
+// Derived Class Car
 class Car : public Vehicle
 {
 public:
@@ -63,6 +68,7 @@ public:
     }
 };
 
+// Derived Class Bike
 class Bike : public Vehicle
 {
 public:
@@ -78,6 +84,9 @@ public:
     }
 };
 
+// ================= MEMBER 2 =================
+
+// Customer Class
 class Customer
 {
 private:
@@ -97,6 +106,7 @@ public:
     }
 };
 
+// Rental Class
 class Rental
 {
 private:
@@ -116,18 +126,19 @@ public:
 
     void displayBill() const
     {
-        cout << "Rental Days: " << rentalDays << endl;
+        cout << "\nRental Days: " << rentalDays << endl;
         cout << "Price Per Day: Rs. " << pricePerDay << endl;
         cout << "Total Bill: Rs. " << calculateBill() << endl;
     }
 };
 
-
+// ================= MEMBER 3 =================
 
 int main()
 {
     Vehicle* vehicles[10];
 
+    // Creating vehicles
     vehicles[0] = new Car(101, "Maruti Swift", 1500);
     vehicles[1] = new Car(102, "Hyundai Creta", 2500);
     vehicles[2] = new Car(103, "Tata Nexon", 2200);
@@ -153,6 +164,7 @@ int main()
         cout << "\nEnter your choice: ";
         cin >> choice;
 
+        // Display Vehicles
         if (choice == 1)
         {
             cout << "\n===== VEHICLE DETAILS =====" << endl;
@@ -163,6 +175,7 @@ int main()
             }
         }
 
+        // Rent Vehicle
         else if (choice == 2)
         {
             int id, days, vehicleID;
@@ -180,6 +193,7 @@ int main()
             cout << "Enter Vehicle ID: ";
             cin >> vehicleID;
 
+            // Search Vehicle
             for (int i = 0; i < 10; i++)
             {
                 if (vehicles[i]->getID() == vehicleID)
@@ -193,10 +207,12 @@ int main()
             {
                 cout << "Invalid Vehicle ID!" << endl;
             }
+
             else if (!vehicles[index]->isAvailable())
             {
                 cout << "Vehicle is not available!" << endl;
             }
+
             else
             {
                 cout << "Enter Rental Days: ";
@@ -206,6 +222,7 @@ int main()
                 {
                     cout << "Invalid rental days!" << endl;
                 }
+
                 else
                 {
                     Customer c1(id, name);
@@ -217,7 +234,10 @@ int main()
                     cout << "\n===== RENTAL RECEIPT =====" << endl;
 
                     c1.display();
+
+                    cout << "\nVehicle Details:" << endl;
                     vehicles[index]->display();
+
                     r1.displayBill();
 
                     cout << "\nVehicle rented successfully!" << endl;
@@ -225,6 +245,7 @@ int main()
             }
         }
 
+        // Return Vehicle
         else if (choice == 3)
         {
             int vehicleID;
@@ -233,6 +254,7 @@ int main()
             cout << "\nEnter Vehicle ID to Return: ";
             cin >> vehicleID;
 
+            // Search Vehicle
             for (int i = 0; i < 10; i++)
             {
                 if (vehicles[i]->getID() == vehicleID)
@@ -246,17 +268,21 @@ int main()
             {
                 cout << "Invalid Vehicle ID!" << endl;
             }
+
             else if (vehicles[index]->isAvailable())
             {
                 cout << "This vehicle is not currently rented!" << endl;
             }
+
             else
             {
                 vehicles[index]->setAvailable(true);
+
                 cout << "Vehicle returned successfully!" << endl;
             }
         }
 
+        // Exit
         else if (choice == 4)
         {
             cout << "\nThank you for using our system!" << endl;
@@ -269,6 +295,7 @@ int main()
 
     } while (choice != 4);
 
+    // Free Dynamic Memory
     for (int i = 0; i < 10; i++)
     {
         delete vehicles[i];
