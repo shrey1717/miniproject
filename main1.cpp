@@ -84,54 +84,6 @@ public:
     }
 };
 
-// ================= MEMBER 2 =================
-
-// Customer Class
-class Customer
-{
-private:
-    int customerID;
-    string customerName;
-
-public:
-    Customer(int id, string name)
-        : customerID(id), customerName(name)
-    {
-    }
-
-    void display() const
-    {
-        cout << "\nCustomer ID: " << customerID << endl;
-        cout << "Customer Name: " << customerName << endl;
-    }
-};
-
-// Rental Class
-class Rental
-{
-private:
-    int rentalDays;
-    double pricePerDay;
-
-public:
-    Rental(int days, double price)
-        : rentalDays(days), pricePerDay(price)
-    {
-    }
-
-    double calculateBill() const
-    {
-        return rentalDays * pricePerDay;
-    }
-
-    void displayBill() const
-    {
-        cout << "\nRental Days: " << rentalDays << endl;
-        cout << "Price Per Day: Rs. " << pricePerDay << endl;
-        cout << "Total Bill: Rs. " << calculateBill() << endl;
-    }
-};
-
 // ================= MEMBER 3 =================
 
 int main()
