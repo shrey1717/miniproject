@@ -84,6 +84,45 @@ public:
     }
 };
 
+// ================= MEMBER 2 =================
+
+class Customer 
+{
+    private:
+    int customerID;
+    string customerName;
+
+    public:
+    Customer(int id, string name) : customerID(id), customerName(name) {}
+
+    void display() const 
+    {
+        cout << "Customer ID: " << customerID << endl;
+        cout << "Customer Name: " << customerName << endl;
+    }
+};
+
+class Rental 
+{
+    private:
+    int rentalDays;
+    double pricePerDay;
+
+    public:
+    Rental(int days, double price) : rentalDays(days), pricePerDay(price) {}
+
+    double calculateBill() const 
+    {
+        return rentalDays * pricePerDay;
+    }
+
+    void displayBill() const 
+    {
+        cout << "Rental days: " << rentalDays << endl;
+        cout << "Total bill: Rs. " << calculateBill() << endl;
+    }
+};
+
 // ================= MEMBER 3 =================
 
 int main()
